@@ -1,0 +1,49 @@
+apply plugin: 'groovy'
+apply plugin: 'project-report'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.5
+version = '1.0'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.2.1'
+    distributionUrl = "http://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.0'
+    }
+}
+
+sourceCompatibility = 1.5
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.3.6'
+    compile 'org.slf4j:slf4j-simple:1.7.10'
+    compile 'commons-cli:commons-cli:1.2'
+    compile 'com.google.guava:guava:18.0'
+//    compile 'com.google.code.findbugs:findbugs:3.0.0'
+    compile 'com.google.code.findbugs:findbugs-ant:3.0.0'
+    compile 'org.apache.ant:ant:1.9.4'
+    testCompile 'junit:junit:4.11'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Implementation-Title': project.name,
+                'Implementation-Version': version,
+                'Main-Class': 'FindBugsDiffCli',
+        )
+    }
+}

@@ -1,0 +1,11 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Gradle template
+.gradle
+build/
+
+
+### JetBrains template
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
+
+## Directory-based project format:
+.idea/
