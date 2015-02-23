@@ -1,97 +1,134 @@
 import com.google.common.collect.Sets
+import groovy.util.logging.Slf4j
+import groovy.util.slurpersupport.GPathResult
 import groovy.util.slurpersupport.NodeChild
 import groovy.util.slurpersupport.NodeChildren
-import groovy.xml.XmlUtil
+import groovy.xml.StreamingMarkupBuilder
 
 /**
  *
  */
+@Slf4j
 public class FindBugsDiff {
 
-    public static void main(String[] args) {
-        String fromFilePath = "C:/Users/Anders/code/findbugs-example/findbugs-example-1/target/findbugsXml.xml";
-        String toFilePath = "C:/Users/Anders/code/findbugs-example/findbugs-example-2/target/findbugsXml.xml";
-
-        diffFromFilePaths(fromFilePath, toFilePath)
+    /**
+     *
+     */
+    public static class Result {
+        Writable xmlNew;
+        Writable xmlFixed;
+        Writable xmlSame;
     }
 
-    public static String diffFromFilePaths(String fromFilePath, String toFilePath) {
+    /**
+     *
+     * @param fromFilePath
+     * @param toFilePath
+     * @return
+     */
+    public static Result diffFromFilePaths(String fromFilePath, String toFilePath) {
         File fromFile = new File(fromFilePath)
         File toFile = new File(toFilePath)
 
         return diff(fromFile, toFile)
     }
 
-    public static String diff(File fromFile, File toFile) {
+    /**
+     *
+     * @param fromFile
+     * @param toFile
+     * @return
+     */
+    public static Result diff(File fromFile, File toFile) {
         String fromText = fromFile.getText()
         String toText = toFile.getText()
 
         return diff(fromText, toText)
     }
 
-    public static String diff(String fromText, String toText) {
+    /**
+     *
+     * @param fromText
+     * @param toText
+     * @return
+     */
+    public static Result diff(String fromText, String toText) {
 
-        NodeChild fromBugCollection = new XmlSlurper().parseText(fromText)
-        NodeChildren fromBugInstances = fromBugCollection.BugInstance
+        GPathResult bugCollectionFrom = new XmlSlurper().parseText(fromText)
+        NodeChildren bugInstancesFrom = bugCollectionFrom.BugInstance
 
-        NodeChild toBugCollection = new XmlSlurper().parseText(toText)
-        NodeChildren toBugInstances = toBugCollection.BugInstance
+        GPathResult bugCollectionTo = new XmlSlurper().parseText(toText)
+        NodeChildren bugInstancesTo = bugCollectionTo.BugInstance
 
-        Map<String, NodeChild> fromMap = makeBugMap(fromBugInstances)
-        Map<String, NodeChild> toMap = makeBugMap(toBugInstances)
+        Map<String, NodeChild> mapFrom = makeBugMap(bugInstancesFrom)
+        Map<String, NodeChild> mapTo = makeBugMap(bugInstancesTo)
 
-        Set fromKeys = fromMap.keySet()
-        Set toKeys = toMap.keySet()
+        Set keysFrom = mapFrom.keySet()
+        Set keysTo = mapTo.keySet()
 
-        Set bugsNew = Sets.difference(toKeys, fromKeys)
-        Set bugsFixed = Sets.difference(fromKeys, toKeys)
+        Set bugsFixed = Sets.difference(keysFrom, keysTo)
+        Set bugsSame = Sets.intersection(keysFrom, keysTo)
+        Set bugsNew = Sets.difference(keysTo, keysFrom)
 
-        println 'new: ' + bugsNew
-        println '\n'
+        Map<String, NodeChild> bugsMapFixed = mapFrom.findAll { it.key in bugsFixed }
+        Map<String, NodeChild> bugsMapSame = mapTo.findAll { it.key in bugsSame }
+        Map<String, NodeChild> bugsMapNew = mapTo.findAll { it.key in bugsNew }
 
-        bugsNew.each() { hash ->
-            println XmlUtil.serialize(toMap[hash])
-        }
+        Writable xmlFixed = toReportXml(bugCollectionFrom, bugsMapFixed)
+        Writable xmlSame = toReportXml(bugCollectionTo, bugsMapSame)
+        Writable xmlNew = toReportXml(bugCollectionTo, bugsMapNew)
 
-        println '\n\n'
+        Result result = new Result(
+                xmlNew: xmlNew,
+                xmlFixed: xmlFixed,
+                xmlSame: xmlSame
+        )
 
-        println 'fixed: ' + bugsFixed
-        println '\n'
-
-        bugsFixed.each() { hash ->
-            println XmlUtil.serialize(fromMap[hash])
-        }
-
-//        NamespaceAwareHashMap attrs = [:]
-//        NodeChild out = new NodeChild(new Node(null, "BugCollection", attrs, null, null), null, null)
-//        NodeChild out = fromBugCollection
-//        NodeChild out = toBugCollection
-//        out.findAll() { node ->
-//            node.name == 'BugInstance'
-//        }.replaceNode() {}
-//        toBugInstances.replaceNode() {}
-
-//        toMap.each() { hash, node ->
-//            out.appendNode(node)
-//        }
-
-//        println "toSet: $toSet"
-//        println "fromSet: $fromSet"
-//
-//        Set<String> fromDiff = Sets.difference(fromSet, toSet)
-//        Set<String> toDiff = Sets.difference(toSet, fromSet)
-//
-//        println "fromDiff: $fromDiff"
-//        println "toDiff: $toDiff"
-
-
-//        println XmlUtil.serialize(out, new FileWriter("temp-findbugs.xml"))
-//        antXmlToHtml()
-
-
-        return ''
+        return result
     }
 
+    /**
+     *
+     * @param bugCollection
+     * @param bugsMap
+     * @return
+     */
+    public static Writable toReportXml(GPathResult bugCollection, Map<String, NodeChild> bugsMap) {
+
+        Set<String> bugsCategories = bugsMap.collect {
+            return it.value.@category.toString()
+        }
+        Set<String> bugsCodes = bugsMap.collect {
+            return it.value.@abbrev.toString()
+        }
+
+        Writable newXml = (Writable) new StreamingMarkupBuilder().bind {
+            it.BugCollection {
+                // the summary stats aren't diff-aware
+//                mkp.yield bugCollection.FindBugsSummary
+
+                mkp.yield bugCollection.Project
+                mkp.yield bugsMap.values()
+                mkp.yield bugCollection.BugCategory.findAll {
+                    return bugsCategories.contains(it.@category.toString())
+                }
+                mkp.yield bugCollection.BugPattern.findAll {
+                    return bugsCategories.contains(it.@category.toString())
+                }
+                mkp.yield bugCollection.BugCode.findAll {
+                    return bugsCodes.contains(it.@abbrev.toString())
+                }
+            }
+        }
+
+        return newXml
+    }
+
+    /**
+     *
+     * @param bugInstances
+     * @return
+     */
     public static Map<String, NodeChild> makeBugMap(NodeChildren bugInstances) {
         Map<String, NodeChild> map = [:]
         bugInstances.each() { NodeChild bugInstance ->
@@ -99,15 +136,5 @@ public class FindBugsDiff {
         }
         return map
     }
-
-//    public static void antXmlToHtml() {
-//        def ant = new AntBuilder()
-//
-//        ant.xslt(
-//            in: 'temp-findbugs.xml',
-//            out: 'temp-findbugs.html',
-//            style: 'C:/dev/apps/findbugs/findbugs-3.0.0/src/xsl/default.xsl'
-//        )
-//    }
 
 }
