@@ -9,18 +9,18 @@ so that `BugInstance` elements have `instanceHash` attributes, which is necessar
 
 ### CLI
 
-Download the JAR `findbugs-diff-1.0-all.jar` from [releases](https://github.com/AndersDJohnson/findbugs-diff/releases), e.g. [v0.1.0](https://github.com/AndersDJohnson/findbugs-diff/releases/download/v0.1.0/findbugs-diff-1.0-all.jar).
+Download the JAR `findbugs-diff-0.1.0-all.jar` from [releases](https://github.com/AndersDJohnson/findbugs-diff/releases), e.g. [v0.1.0](https://github.com/AndersDJohnson/findbugs-diff/releases/download/v0.1.0/findbugs-diff-0.1.0-all.jar).
 
 For CLI usage, including all available options, run:
 
 ```
-java -jar findbugs-diff-1.0-all.jar
+java -jar findbugs-diff-0.1.0-all.jar
 ```
 
 Here's a basic example:
 
 ```
-java -jar findbugs-diff-1.0-all.jar "./path/to/1st/findbugs.xml" "./path/to/2nd/findbugs.xml"
+java -jar findbugs-diff-0.1.0-all.jar "./path/to/1st/findbugs.xml" "./path/to/2nd/findbugs.xml"
 ```
 
 ## Support
