@@ -29,10 +29,10 @@ class FindBugsDiffIo {
      * @param xml
      * @param xslUrl
      */
-    public static void generateHtml(Writable xml, String xmlPath, URL xslUrl) {
-        writeXml(xml, xmlPath)
-        String htmlOutPath = xmlPath.replaceAll(/xml$/, 'html')
-        xmlToHtml(xmlPath, htmlOutPath, xslUrl)
+    public static void generateHtml(Writable xml, String outXmlPath, URL xslUrl) {
+        writeXml(xml, outXmlPath)
+        String htmlOutPath = outXmlPath.replaceAll(/xml$/, 'html')
+        xmlToHtml(outXmlPath, htmlOutPath, xslUrl)
     }
 
     /**
@@ -40,9 +40,12 @@ class FindBugsDiffIo {
      * @param xml
      * @param xmlPath
      */
-    public static void writeXml(Writable xml, String xmlPath) {
-        (new File(xmlPath)).createNewFile()
-        XmlUtil.serialize(xml, new FileWriter(xmlPath))
+    public static void writeXml(Writable xml, String outXmlPath) {
+        File outXmlFile = new File(outXmlPath)
+        outXmlFile.parentFile.mkdirs()
+        outXmlFile.createNewFile()
+
+        XmlUtil.serialize(xml, new FileWriter(outXmlFile))
     }
 
     /**
@@ -53,12 +56,16 @@ class FindBugsDiffIo {
      */
     public static void xmlToHtml(String inXmlPath, String outHtmlPath, URL xslUrl) {
 
-        InputStream xslStream = xslUrl.openStream();
+        InputStream xslStream = xslUrl.openStream()
         InputStreamReader xslReader = new InputStreamReader(xslStream)
 
         FileReader inXmlReader = new FileReader(new File(inXmlPath))
 
-        OutputStream outHtmlStream = new FileOutputStream(outHtmlPath)
+        File outHtmlFile = new File(outHtmlPath)
+        outHtmlFile.parentFile.mkdirs()
+        outHtmlFile.createNewFile()
+
+        OutputStream outHtmlStream = new FileOutputStream(outHtmlFile)
 
         def factory = TransformerFactory.newInstance()
         def transformer = factory.newTransformer(new StreamSource(xslReader))
