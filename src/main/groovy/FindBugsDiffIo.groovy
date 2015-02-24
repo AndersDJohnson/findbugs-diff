@@ -42,7 +42,9 @@ class FindBugsDiffIo {
      */
     public static void writeXml(Writable xml, String outXmlPath) {
         File outXmlFile = new File(outXmlPath)
-        outXmlFile.parentFile.mkdirs()
+        if (outXmlFile.parentFile) {
+            outXmlFile.parentFile.mkdirs()
+        }
         outXmlFile.createNewFile()
 
         XmlUtil.serialize(xml, new FileWriter(outXmlFile))
@@ -62,7 +64,9 @@ class FindBugsDiffIo {
         FileReader inXmlReader = new FileReader(new File(inXmlPath))
 
         File outHtmlFile = new File(outHtmlPath)
-        outHtmlFile.parentFile.mkdirs()
+        if (outHtmlFile.parentFile) {
+            outHtmlFile.parentFile.mkdirs()
+        }
         outHtmlFile.createNewFile()
 
         OutputStream outHtmlStream = new FileOutputStream(outHtmlFile)
