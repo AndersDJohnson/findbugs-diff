@@ -4,7 +4,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'idea'
 
 sourceCompatibility = 1.5
-version = '1.0'
+version = '0.1.0'
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.2.1'
@@ -19,9 +19,6 @@ buildscript {
         classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.0'
     }
 }
-
-sourceCompatibility = 1.5
-version = '1.0'
 
 repositories {
     mavenCentral()
