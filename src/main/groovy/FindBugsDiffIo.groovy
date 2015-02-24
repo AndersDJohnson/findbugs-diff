@@ -1,6 +1,10 @@
 import groovy.util.logging.Slf4j
 import groovy.xml.XmlUtil
 
+import javax.xml.transform.TransformerFactory
+import javax.xml.transform.stream.StreamResult
+import javax.xml.transform.stream.StreamSource
+
 /**
  *
  */
@@ -14,21 +18,21 @@ class FindBugsDiffIo {
     public static void run(FindBugsDiffCli.FindBugsDiffOptions options) {
         FindBugsDiff.Result result = FindBugsDiff.diffFromFilePaths(options.pathFrom, options.pathTo)
 
-        generateHtml(result.xmlFixed, options.xmlFixedPath, options.xslPath)
-        generateHtml(result.xmlSame, options.xmlSamePath, options.xslPath)
-        generateHtml(result.xmlNew, options.xmlNewPath, options.xslPath)
+        generateHtml(result.xmlFixed, options.xmlFixedPath, options.xslURL)
+        generateHtml(result.xmlSame, options.xmlSamePath, options.xslURL)
+        generateHtml(result.xmlNew, options.xmlNewPath, options.xslURL)
     }
 
     /**
      *
      * @param xmlPath
      * @param xml
-     * @param xslPath
+     * @param xslUrl
      */
-    public static void generateHtml(Writable xml, String xmlPath, String xslPath) {
+    public static void generateHtml(Writable xml, String xmlPath, URL xslUrl) {
         writeXml(xml, xmlPath)
         String htmlOutPath = xmlPath.replaceAll(/xml$/, 'html')
-        antXmlToHtml(xmlPath, htmlOutPath, xslPath)
+        xmlToHtml(xmlPath, htmlOutPath, xslUrl)
     }
 
     /**
@@ -44,17 +48,22 @@ class FindBugsDiffIo {
     /**
      *
      * @param inXmlPath
-     * @param outXmlPath
-     * @param xslPath E.g. 'C:/dev/apps/findbugs/findbugs-3.0.0/src/xsl/default.xsl'
+     * @param outHtmlPath
+     * @param xslUrl E.g. 'file:///C:/dev/apps/findbugs/findbugs-3.0.0/src/xsl/default.xsl'
      */
-    public static void antXmlToHtml(String inXmlPath, String outHtmlPath, String xslPath) {
-        def ant = new AntBuilder()
+    public static void xmlToHtml(String inXmlPath, String outHtmlPath, URL xslUrl) {
 
-        ant.xslt(
-                in: inXmlPath,
-                out: outHtmlPath,
-                style: xslPath
-        )
+        InputStream xslStream = xslUrl.openStream();
+        InputStreamReader xslReader = new InputStreamReader(xslStream)
+
+        FileReader inXmlReader = new FileReader(new File(inXmlPath))
+
+        OutputStream outHtmlStream = new FileOutputStream(outHtmlPath)
+
+        def factory = TransformerFactory.newInstance()
+        def transformer = factory.newTransformer(new StreamSource(xslReader))
+        transformer.transform(new StreamSource(inXmlReader), new StreamResult(outHtmlStream))
+
     }
 
 }

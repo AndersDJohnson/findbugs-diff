@@ -18,10 +18,10 @@ class FindBugsDiffTest {
         FindBugsDiffIo.run(findBugsDiffOptions)
 
         // for comparison
-        FindBugsDiffIo.antXmlToHtml(pathTo, 'findbugs-1-default.html',
-                'C:\\dev\\apps\\findbugs\\findbugs-3.0.0\\lib\\findbugs\\default.xsl')
-        FindBugsDiffIo.antXmlToHtml(pathTo, 'findbugs-1-fancy.html',
-                'C:\\dev\\apps\\findbugs\\findbugs-3.0.0\\lib\\findbugs\\fancy.xsl')
+        FindBugsDiffIo.xmlToHtml(pathTo, 'findbugs-1-default.html',
+                new File('C:\\dev\\apps\\findbugs\\findbugs-3.0.0\\lib\\findbugs\\default.xsl').toURI().toURL())
+        FindBugsDiffIo.xmlToHtml(pathTo, 'findbugs-1-fancy.html',
+                new File('C:\\dev\\apps\\findbugs\\findbugs-3.0.0\\lib\\findbugs\\fancy.xsl').toURI().toURL())
 
     }
 
