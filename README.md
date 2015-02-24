@@ -1,7 +1,30 @@
 # findbugs-diff
 
-Report Findbugs diffs.
+Report FindBugs diffs.
 
+## Use
+
+Note: Must be run on FindBugs XML reports generated with the `xml:withMessages` option,
+so that `BugInstance` elements have `instanceHash` attributes, which is necessary for diffing.
+
+### CLI
+
+For CLI usage, including all available options, run:
+
+```
+java -jar findbugs-diff-1.0-all.jar
+```
+
+Here's a basic example:
+
+```
+java -jar findbugs-diff-1.0-all.jar "./path/to/1st/findbugs.xml" "./path/to/2nd/findbugs.xml"
+```
+
+## Support
+
+* FindBugs 2, 3
+* Java 1.6, 1.7
 
 ## Alternatives
 
