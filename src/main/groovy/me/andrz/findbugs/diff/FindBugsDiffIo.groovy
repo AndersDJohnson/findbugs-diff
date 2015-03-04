@@ -1,3 +1,5 @@
+package me.andrz.findbugs.diff
+
 import groovy.util.logging.Slf4j
 import groovy.xml.XmlUtil
 

@@ -40,7 +40,7 @@ jar {
         attributes(
                 'Implementation-Title': project.name,
                 'Implementation-Version': version,
-                'Main-Class': 'FindBugsDiffCli',
+                'Main-Class': 'me.andrz.findbugs.diff.FindBugsDiffCli',
         )
     }
 }

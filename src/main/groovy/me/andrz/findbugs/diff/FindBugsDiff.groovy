@@ -1,3 +1,5 @@
+package me.andrz.findbugs.diff
+
 import com.google.common.collect.Sets
 import groovy.util.logging.Slf4j
 import groovy.util.slurpersupport.GPathResult
