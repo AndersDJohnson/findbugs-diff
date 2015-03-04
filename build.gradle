@@ -35,6 +35,10 @@ dependencies {
     testCompile 'junit:junit:4.11'
 }
 
+tasks.withType(Test) {
+    systemProperties = System.getProperties()
+}
+
 jar {
     manifest {
         attributes(
