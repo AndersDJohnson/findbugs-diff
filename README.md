@@ -2,6 +2,8 @@
 
 Report FindBugs diffs.
 
+[![Build Status](https://travis-ci.org/AndersDJohnson/findbugs-diff.svg)](https://travis-ci.org/AndersDJohnson/findbugs-diff)
+
 ## Use
 
 Note: Must be run on FindBugs XML reports generated with the `xml:withMessages` option,
