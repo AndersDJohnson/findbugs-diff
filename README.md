@@ -1,4 +1,4 @@
-# findbugs-diff
+# [findbugs-diff](https://github.com/AndersDJohnson/findbugs-diff)
 
 Report FindBugs diffs.
 
