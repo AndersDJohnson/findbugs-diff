@@ -14,7 +14,7 @@ public class FindBugsDiffCli {
         String xmlFixedPath = 'findbugs-fixed.xml'
         String xmlSamePath = 'findbugs-same.xml'
         String xmlNewPath = 'findbugs-new.xml'
-        URL xslURL = FindBugsDiffCli.class.getResource('/diff.xsl')
+        URL xslURL = FindBugsDiffCli.class.getResource('/me/andrz/findbugs/diff/diff.xsl')
     }
 
     public static void main(String[] args) {
