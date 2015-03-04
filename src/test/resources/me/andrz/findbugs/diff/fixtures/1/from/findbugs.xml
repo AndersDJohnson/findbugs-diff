@@ -1,0 +1,195 @@
+<BugCollection timestamp='1423446938645' analysisTimestamp='1423446954477' sequence='0' release='' version='3.0.0'>
+    <BugInstance rank='17' category='STYLE' instanceHash='8d001b6817b26f1c4f7e1362542e0cd2' instanceOccurrenceNum='0'
+                 priority='2' abbrev='DLS' type='DLS_DEAD_LOCAL_STORE' cweid='563' instanceOccurrenceMax='0'>
+        <ShortMessage>Dead store to local variable</ShortMessage>
+        <LongMessage>Dead store to eq in Main.main(String[])</LongMessage>
+        <Class classname='Main' primary='true'>
+            <SourceLine start='1' classname='Main' sourcepath='Main.java' sourcefile='Main.java' end='22'>
+                <Message>At Main.java:[lines 1-22]</Message>
+            </SourceLine>
+            <Message>In class Main</Message>
+        </Class>
+        <Method isStatic='true' classname='Main' name='main' primary='true' signature='([Ljava/lang/String;)V'>
+            <SourceLine endBytecode='27' startBytecode='0' start='4' classname='Main' sourcepath='Main.java'
+                        sourcefile='Main.java' end='15'></SourceLine>
+            <Message>In method Main.main(String[])</Message>
+        </Method>
+        <LocalVariable register='3' name='eq' pc='42' role='LOCAL_VARIABLE_NAMED'>
+            <Message>Local variable named eq</Message>
+        </LocalVariable>
+        <SourceLine endBytecode='41' startBytecode='41' start='13' classname='Main' primary='true'
+                    sourcepath='Main.java' sourcefile='Main.java' end='13'>
+            <Message>At Main.java:[line 13]</Message>
+        </SourceLine>
+        <Property name='edu.umd.cs.findbugs.detect.DeadLocalStoreProperty.METHOD_RESULT' value='true'></Property>
+        <Property name='edu.umd.cs.findbugs.detect.DeadLocalStoreProperty.NO_LOADS' value='true'></Property>
+        <Property name='edu.umd.cs.findbugs.detect.DeadLocalStoreProperty.LOCAL_NAME' value='eq'></Property>
+    </BugInstance>
+    <BugInstance rank='17' category='STYLE' instanceHash='e4cc2f6a5954901df6aa7f1a2e242159' instanceOccurrenceNum='0'
+                 priority='2' abbrev='DLS' type='DLS_DEAD_LOCAL_STORE' cweid='563' instanceOccurrenceMax='0'>
+        <ShortMessage>Dead store to local variable</ShortMessage>
+        <LongMessage>Dead store to eq2 in Main.main(String[])</LongMessage>
+        <Class classname='Main' primary='true'>
+            <SourceLine start='1' classname='Main' sourcepath='Main.java' sourcefile='Main.java' end='22'>
+                <Message>At Main.java:[lines 1-22]</Message>
+            </SourceLine>
+            <Message>In class Main</Message>
+        </Class>
+        <Method isStatic='true' classname='Main' name='main' primary='true' signature='([Ljava/lang/String;)V'>
+            <SourceLine endBytecode='27' startBytecode='0' start='4' classname='Main' sourcepath='Main.java'
+                        sourcefile='Main.java' end='15'></SourceLine>
+            <Message>In method Main.main(String[])</Message>
+        </Method>
+        <LocalVariable register='4' name='eq2' pc='52' role='LOCAL_VARIABLE_NAMED'>
+            <Message>Local variable named eq2</Message>
+        </LocalVariable>
+        <SourceLine endBytecode='50' startBytecode='50' start='14' classname='Main' primary='true'
+                    sourcepath='Main.java' sourcefile='Main.java' end='14'>
+            <Message>At Main.java:[line 14]</Message>
+        </SourceLine>
+        <Property name='edu.umd.cs.findbugs.detect.DeadLocalStoreProperty.METHOD_RESULT' value='true'></Property>
+        <Property name='edu.umd.cs.findbugs.detect.DeadLocalStoreProperty.NO_LOADS' value='true'></Property>
+        <Property name='edu.umd.cs.findbugs.detect.DeadLocalStoreProperty.LOCAL_NAME' value='eq2'></Property>
+    </BugInstance>
+    <BugInstance rank='1' category='CORRECTNESS' instanceHash='dfa2e86a7c608c081dd9548ccbe90e55'
+                 instanceOccurrenceNum='0' priority='1' abbrev='EC' type='EC_UNRELATED_TYPES' instanceOccurrenceMax='0'>
+        <ShortMessage>Call to equals() comparing different types</ShortMessage>
+        <LongMessage>Call to String.equals(Integer) in Main.main(String[])</LongMessage>
+        <Class classname='Main' primary='true'>
+            <SourceLine start='1' classname='Main' sourcepath='Main.java' sourcefile='Main.java' end='22'>
+                <Message>At Main.java:[lines 1-22]</Message>
+            </SourceLine>
+            <Message>In class Main</Message>
+        </Class>
+        <Method isStatic='true' classname='Main' name='main' primary='true' signature='([Ljava/lang/String;)V'>
+            <SourceLine endBytecode='27' startBytecode='0' start='4' classname='Main' sourcepath='Main.java'
+                        sourcefile='Main.java' end='15'></SourceLine>
+            <Message>In method Main.main(String[])</Message>
+        </Method>
+        <Type descriptor='Ljava/lang/Integer;' role='TYPE_FOUND'>
+            <SourceLine start='52' classname='java.lang.Integer' sourcepath='java/lang/Integer.java'
+                        sourcefile='Integer.java' end='1236'>
+                <Message>At Integer.java:[lines 52-1236]</Message>
+            </SourceLine>
+            <Message>Actual type Integer</Message>
+        </Type>
+        <Type descriptor='Ljava/lang/String;' role='TYPE_EXPECTED'>
+            <SourceLine start='108' classname='java.lang.String' sourcepath='java/lang/String.java'
+                        sourcefile='String.java' end='3100'>
+                <Message>At String.java:[lines 108-3100]</Message>
+            </SourceLine>
+            <Message>Expected String</Message>
+        </Type>
+        <LocalVariable register='2' name='integer' pc='34' role='LOCAL_VARIABLE_VALUE_OF'>
+            <Message>Value loaded from integer</Message>
+        </LocalVariable>
+        <LocalVariable register='1' name='string' pc='34' role='LOCAL_VARIABLE_VALUE_OF'>
+            <Message>Value loaded from string</Message>
+        </LocalVariable>
+        <Method isStatic='false' classname='java.lang.String' name='equals' role='METHOD_EQUALS_USED'
+                signature='(Ljava/lang/Object;)Z'>
+            <SourceLine endBytecode='208' startBytecode='0' start='975' classname='java.lang.String'
+                        sourcepath='java/lang/String.java' sourcefile='String.java' end='993'></SourceLine>
+            <Message>String.equals(Object) used to determine equality</Message>
+        </Method>
+        <SourceLine endBytecode='35' startBytecode='35' start='13' classname='Main' primary='true'
+                    sourcepath='Main.java' sourcefile='Main.java' end='13'>
+            <Message>At Main.java:[line 13]</Message>
+        </SourceLine>
+        <SourceLine endBytecode='44' startBytecode='44' start='14' classname='Main' sourcepath='Main.java'
+                    role='SOURCE_LINE_ANOTHER_INSTANCE' sourcefile='Main.java' end='14'>
+            <Message>Another occurrence at Main.java:[line 14]</Message>
+        </SourceLine>
+    </BugInstance>
+    <BugCategory category='STYLE'>
+        <Description>Dodgy code</Description>
+    </BugCategory>
+    <BugCategory category='CORRECTNESS'>
+        <Description>Correctness</Description>
+    </BugCategory>
+    <BugPattern category='CORRECTNESS' abbrev='EC' type='EC_UNRELATED_TYPES'>
+        <ShortDescription>Call to equals() comparing different types</ShortDescription>
+        <Details>
+
+            &lt;p&gt; This method calls equals(Object) on two references of different
+            class types with no common subclasses.
+            Therefore, the objects being compared
+            are unlikely to be members of the same class at runtime
+            (unless some application classes were not analyzed, or dynamic class
+            loading can occur at runtime).
+            According to the contract of equals(),
+            objects of different
+            classes should always compare as unequal; therefore, according to the
+            contract defined by java.lang.Object.equals(Object),
+            the result of this comparison will always be false at runtime.
+            &lt;/p&gt;
+
+        </Details>
+    </BugPattern>
+    <BugPattern category='STYLE' abbrev='DLS' type='DLS_DEAD_LOCAL_STORE'>
+        <ShortDescription>Dead store to local variable</ShortDescription>
+        <Details>
+
+            &lt;p&gt;
+            This instruction assigns a value to a local variable,
+            but the value is not read or used in any subsequent instruction.
+            Often, this indicates an error, because the value computed is never
+            used.
+            &lt;/p&gt;
+            &lt;p&gt;
+            Note that Sun's javac compiler often generates dead stores for
+            final local variables. Because FindBugs is a bytecode-based tool,
+            there is no easy way to eliminate these false positives.
+            &lt;/p&gt;
+
+        </Details>
+    </BugPattern>
+    <BugCode abbrev='EC'>
+        <Description>Comparing incompatible types for equality</Description>
+    </BugCode>
+    <BugCode abbrev='DLS' cweid='563'>
+        <Description>Dead local store</Description>
+    </BugCode>
+    <Errors errors='0' missingClasses='0'></Errors>
+    <FindBugsSummary alloc_mbytes='455.12' priority_2='2' priority_1='1' gc_seconds='0.05' peak_mbytes='91.23'
+                     total_bugs='3' java_version='1.7.0_25' referenced_classes='13'
+                     timestamp='Sun, 8 Feb 2015 19:55:38 -0600' total_classes='1' num_packages='1' total_size='17'
+                     cpu_seconds='5.97' clock_seconds='2.59' vm_version='23.25-b01'>
+        <FileStats path='Main.java' bugCount='3' bugHash='34e3f4eb8aff6281ab43406afd7434b5' size='17'></FileStats>
+        <PackageStats priority_2='2' priority_1='1' total_size='17' package='' total_bugs='3' total_types='1'>
+            <ClassStats priority_2='2' priority_1='1' sourceFile='Main.java' bugs='3' class='Main' interface='false'
+                        size='17'></ClassStats>
+        </PackageStats>
+        <FindBugsProfile>
+            <ClassProfile avgMicrosecondsPerInvocation='1312' maxMicrosecondsPerInvocation='43149'
+                          name='edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine' invocations='318'
+                          totalMilliseconds='417' standardDeviationMircosecondsPerInvocation='3647'></ClassProfile>
+            <ClassProfile avgMicrosecondsPerInvocation='619' maxMicrosecondsPerInvocation='36146'
+                          name='edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine' invocations='319'
+                          totalMilliseconds='197' standardDeviationMircosecondsPerInvocation='2071'></ClassProfile>
+            <ClassProfile avgMicrosecondsPerInvocation='12716' maxMicrosecondsPerInvocation='43996'
+                          name='edu.umd.cs.findbugs.detect.FieldItemSummary' invocations='13' totalMilliseconds='165'
+                          standardDeviationMircosecondsPerInvocation='15304'></ClassProfile>
+            <ClassProfile avgMicrosecondsPerInvocation='2266' maxMicrosecondsPerInvocation='36711'
+                          name='edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory' invocations='56'
+                          totalMilliseconds='126' standardDeviationMircosecondsPerInvocation='5043'></ClassProfile>
+            <ClassProfile avgMicrosecondsPerInvocation='282' maxMicrosecondsPerInvocation='3414'
+                          name='edu.umd.cs.findbugs.util.TopologicalSort' invocations='286' totalMilliseconds='80'
+                          standardDeviationMircosecondsPerInvocation='471'></ClassProfile>
+            <ClassProfile avgMicrosecondsPerInvocation='18942' maxMicrosecondsPerInvocation='74385'
+                          name='edu.umd.cs.findbugs.classfile.engine.bcel.MethodGenFactory' invocations='4'
+                          totalMilliseconds='75' standardDeviationMircosecondsPerInvocation='32013'></ClassProfile>
+            <ClassProfile avgMicrosecondsPerInvocation='5261' maxMicrosecondsPerInvocation='39622'
+                          name='edu.umd.cs.findbugs.detect.NoteDirectlyRelevantTypeQualifiers' invocations='13'
+                          totalMilliseconds='68' standardDeviationMircosecondsPerInvocation='10318'></ClassProfile>
+            <ClassProfile avgMicrosecondsPerInvocation='2680' maxMicrosecondsPerInvocation='23458'
+                          name='edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine' invocations='17'
+                          totalMilliseconds='45' standardDeviationMircosecondsPerInvocation='5417'></ClassProfile>
+            <ClassProfile avgMicrosecondsPerInvocation='2833' maxMicrosecondsPerInvocation='16583'
+                          name='edu.umd.cs.findbugs.detect.OverridingEqualsNotSymmetrical' invocations='13'
+                          totalMilliseconds='36' standardDeviationMircosecondsPerInvocation='4297'></ClassProfile>
+        </FindBugsProfile>
+    </FindBugsSummary>
+    <ClassFeatures></ClassFeatures>
+    <History></History>
+</BugCollection>
