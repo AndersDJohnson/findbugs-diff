@@ -1,5 +1,11 @@
+/**
+ * http://central.sonatype.org/pages/gradle.html
+ */
+
 apply plugin: 'groovy'
 apply plugin: 'project-report'
+apply plugin: 'maven'
+apply plugin: 'signing'
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'idea'
 
@@ -47,5 +53,71 @@ jar {
                 'Implementation-Version': version,
                 'Main-Class': 'me.andrz.findbugs.diff.FindBugsDiffCli',
         )
+    }
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives jar, javadocJar, sourcesJar
+}
+
+if (System.getenv('CI') != 'true') {
+    signing {
+        sign configurations.archives
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'findbugs-diff'
+                packaging 'jar'
+                artifactId 'findbugs-diff'
+                description 'Report FindBugs diffs.'
+                url 'https://github.com/AndersDJohnson/findbugs-diff'
+
+                scm {
+                    connection 'scm:git:https://github.com/AndersDJohnson/findbugs-diff.git'
+                    developerConnection 'scm:git:git@github.com:AndersDJohnson/findbugs-diff.git'
+                    url 'https://github.com/AndersDJohnson/findbugs-diff'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'AndersDJohnson'
+                        name 'Anders D. Johnson'
+                        url 'https://andrz.me'
+                        email 'anders.d.johnson.developer@gmail.com'
+                    }
+                }
+            }
+        }
     }
 }
