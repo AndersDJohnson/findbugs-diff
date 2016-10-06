@@ -3,6 +3,8 @@
 .gradle
 build/
 
+findbugs-*.html
+findbugs-*.xml
 
 ### JetBrains template
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
