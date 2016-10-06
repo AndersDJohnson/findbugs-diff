@@ -36,6 +36,7 @@ java -jar findbugs-diff-0.1.0-all.jar "./path/to/1st/findbugs.xml" "./path/to/2n
 * https://wiki.jenkins-ci.org/display/JENKINS/Static+Code+Analysis+Plug-ins#StaticCodeAnalysisPlug-ins-trend
 
 ## Other research
+* http://findbugs.sourceforge.net/manual/datamining.html
 * https://mailman.cs.umd.edu/pipermail/findbugs-discuss/2009-January/002672.html
 * https://issues.jenkins-ci.org/browse/JENKINS-2968
 * http://www.sw-engineering-candies.com/blog-1/howtotransformtheresultsfromfindbugscheckstyleandpmdintoasinglehtmlreportwithxslt20andjava
