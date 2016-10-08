@@ -13,6 +13,10 @@ sourceCompatibility = 1.5
 group = 'me.andrz.findbugs'
 version = '0.1.0'
 
+// Define these so CI build doesn't fail, but add to "$GRADLE_USER_HOME/gradle.properties".
+ext.ossrhUsername = null
+ext.ossrhPassword = null
+
 task wrapper(type: Wrapper) {
     gradleVersion = '2.2.1'
     distributionUrl = "http://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
