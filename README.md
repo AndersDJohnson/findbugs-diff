@@ -11,6 +11,8 @@ so that `BugInstance` elements have `instanceHash` attributes, which is necessar
 
 ### CLI
 
+#### JAR
+
 Download a JAR `findbugs-diff-${version}-all.jar` from [releases](https://github.com/AndersDJohnson/findbugs-diff/releases), e.g. [v0.1.0](https://github.com/AndersDJohnson/findbugs-diff/releases/download/v0.1.0/findbugs-diff-0.1.0-all.jar).
 
 For CLI usage, including all available options, run:
@@ -24,6 +26,13 @@ Here's a basic example:
 ```
 java -jar findbugs-diff-0.1.0-all.jar "./path/to/1st/findbugs.xml" "./path/to/2nd/findbugs.xml"
 ```
+
+#### maven-bin
+
+Alternatively, you can use my project [maven-bin](https://github.com/AndersDJohnson/maven-bin) as follows:
+
+1. [Install maven-bin](https://github.com/AndersDJohnson/maven-bin#install).
+2. Run `mvbn me.andrz.findbugs:findbugs-diff`.
 
 ## Support
 
