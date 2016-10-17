@@ -71,7 +71,7 @@ task sourcesJar(type: Jar) {
 }
 
 artifacts {
-    archives jar, javadocJar, sourcesJar
+    archives jar, javadocJar, sourcesJar, shadowJar
 }
 
 if (System.getenv('CI') != 'true') {
